@@ -1,0 +1,107 @@
+{
+  "type" : "index_hadoop",
+  "spec" : {
+    "ioConfig" : {
+      "type" : "hadoop",
+      "inputSpec" : {
+        "type" : "static",
+        "paths" : "/home/gyk/logs-sampled.json"
+      }
+    },
+    "dataSchema" : {
+      "dataSource" : "marcolog",
+      "granularitySpec" : {
+        "type" : "uniform",
+        "segmentGranularity" : "minute",
+        "queryGranularity" : "second",
+        "intervals" : ["2016-05-27/2016-05-30"]
+      },
+      "parser" : {
+        "type" : "string",
+        "parseSpec" : {
+          "format" : "json",
+          "flattenSpec" : {
+            "useFieldDiscovery" : true,
+            "fields" : [
+              {
+                "type" : "path",
+                "name" : "upstream-addr",
+                "expr" : "$.upstream.addr"
+              },
+              {
+                "type" : "path",
+                "name" : "upstream-status",
+                "expr" : "$.upstream.status"
+              },
+              {
+                "type" : "path",
+                "name" : "upstream-response_time",
+                "expr" : "$.upstream.response_time"
+              },
+              {
+                "type" : "path",
+                "name" : "upstream-response_length",
+                "expr" : "$.upstream.response_length"
+              }
+            ]
+          },
+          "dimensionsSpec" : {
+            "dimensions" : [
+              "remote_user",
+              "node_type",
+              "node_version",
+              "request_uri",
+              "node_name",
+              "bucket",
+              "protocol",
+              "method",
+              "scheme",
+              "status",
+              "error_type",
+              "content_type",
+              "uptype"
+            ]
+          },
+          "timestampSpec" : {
+            "format" : "dd/MMM/yyyy:HH:mm:ss Z",
+            "column" : "timestamp"
+          }
+        }
+      },
+      "metricsSpec" : [
+        {
+          "name" : "count",
+          "type" : "count"
+        },
+        {
+          "name" : "bytes_sent",
+          "type" : "longSum",
+          "fieldName" : "bytes_sent"
+        },
+        {
+          "name" : "body_bytes_sent",
+          "type" : "longSum",
+          "fieldName" : "body_bytes_sent"
+        },
+        {
+          "name" : "request_time",
+          "type" : "longSum",
+          "fieldName" : "request_time"
+        },
+        {
+          "name" : "content_length",
+          "type" : "longSum",
+          "fieldName" : "content_length"
+        }
+      ]
+    },
+    "tuningConfig" : {
+      "type" : "hadoop",
+      "partitionsSpec" : {
+        "type" : "hashed",
+        "targetPartitionSize" : 5000000
+      },
+      "jobProperties" : {}
+    }
+  }
+}

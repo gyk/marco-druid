@@ -1,0 +1,24 @@
+{
+  "queryType" : "groupBy",
+  "dataSource" : "marcolog",
+  "intervals" : ["2016-05-27/2016-05-28"],
+  "granularity" : "all",
+  "dimensions" : ["node_version"],
+  "limitSpec": {
+    "type": "default",
+    "limit": 10,
+    "columns": [
+      {
+        "dimension": "node_version-count",
+        "direction": "descending"
+      }
+    ]
+  },
+  "aggregations" : [
+    {
+      "type" : "longSum",
+      "name" : "node_version-count",
+      "fieldName" : "count"
+    }
+  ]
+}

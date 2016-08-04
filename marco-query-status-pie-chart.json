@@ -1,0 +1,15 @@
+{
+  "queryType" : "groupBy",
+  "dataSource" : "marcolog",
+  "intervals" : ["2016-05-27/2016-05-28"],
+  "granularity" : "all",
+  "dimensions" : ["status"],
+  "limitSpec": { "type": "default", "columns": [{"dimension": "status-count", "direction": "descending"}] },
+  "aggregations" : [
+    {
+      "type" : "longSum",
+      "name" : "status-count",
+      "fieldName" : "count"
+    }
+  ]
+}

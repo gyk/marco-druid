@@ -1,0 +1,15 @@
+{
+  "queryType" : "groupBy",
+  "dataSource" : "marcolog",
+  "intervals" : ["2016-05-27/2016-05-28"],
+  "granularity" : "all",
+  "dimensions" : ["error_type"],
+  "limitSpec": { "type": "default", "limit": 10, "columns": [{"dimension": "error_type-count", "direction": "descending"}] },
+  "aggregations" : [
+    {
+      "type" : "longSum",
+      "name" : "error_type-count",
+      "fieldName" : "count"
+    }
+  ]
+}

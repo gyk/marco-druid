@@ -1,0 +1,16 @@
+{
+  "queryType" : "topN",
+  "dataSource" : "marcolog",
+  "intervals" : ["2016-05-27/2016-05-28"],
+  "granularity" : "all",
+  "dimension" : "bucket",
+  "metric" : "bucket-count",
+  "threshold" : 10,
+  "aggregations" : [
+    {
+      "type" : "longSum",
+      "name" : "bucket-count",
+      "fieldName" : "count"
+    }
+  ]
+}
