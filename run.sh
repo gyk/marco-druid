@@ -6,7 +6,7 @@ curl -X 'POST' -H 'Content-Type:application/json' --data-binary @marco-index.jso
 sleep 5
 
 # pushes data
-curl -X 'POST' -H 'Content-Type:application/json' --data-binary @marco-index.json localhost:8090/druid/indexer/v1/tas
+curl -X 'POST' -H 'Content-Type:application/json' --data-binary @marco-index.json localhost:8090/druid/indexer/v1/task
 
 sleep 10
 

@@ -59,7 +59,8 @@
               "status",
               "error_type",
               "content_type",
-              "uptype"
+              "uptype",
+              "upstream-status"
             ]
           },
           "timestampSpec" : {
@@ -68,6 +69,17 @@
           }
         }
       },
+      "postAggregations" : [
+        {
+          "type" : "arithmetic",
+          "name" : "averageSpeed",
+          "fn" : "/",
+          "fields" : [
+            { "type" : "fieldAccess", "name" : "request_time", "fieldName" : "request_time" },
+            { "type" : "fieldAccess", "name" : "count", "fieldName" : "count" }
+          ]
+        }
+      ],
       "metricsSpec" : [
         {
           "name" : "count",
@@ -85,13 +97,23 @@
         },
         {
           "name" : "request_time",
-          "type" : "longSum",
+          "type" : "doubleSum",
           "fieldName" : "request_time"
         },
         {
           "name" : "content_length",
           "type" : "longSum",
           "fieldName" : "content_length"
+        },
+        {
+          "name" : "upstream-response_time",
+          "type" : "doubleSum",
+          "fieldName" : "upstream-response_time"
+        },
+        {
+          "name" : "upstream-response_length",
+          "type" : "longSum",
+          "fieldName" : "upstream-response_length"
         }
       ]
     },
